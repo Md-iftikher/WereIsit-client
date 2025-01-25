@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider"; 
 import Swal from "sweetalert2";
 import { FaGoogle } from 'react-icons/fa';
-
+import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 const Register = () => {
   const { createUser , handleSignInWithGoogle, handleUpdateProfile } = useContext(AuthContext); 
   const navigate = useNavigate();
@@ -97,85 +97,94 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center  bg-blue-100">
-      <div className="bg-white w-full max-w-lg p-10 shadow-lg rounded-lg my-5">
-        <h2 className="text-2xl font-bold text-center text-blue-600">
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-blue-100 to-blue-200">
+      <div className="bg-sky-100 w-full max-w-lg p-10 shadow-lg rounded-lg border border-gray-300">
+        <h2 className="text-2xl font-bold text-center text-sky-900 mb-6">
           Create an Account
         </h2>
-        <form onSubmit={handleRegisterSubmit} className="card-body">
+        <form onSubmit={handleRegisterSubmit} className="space-y-4">
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Name</span>
+              <span className="label-text font-semibold">Name</span>
             </label>
             <input
               name="name"
               type="text"
               placeholder="Your Name"
-              className="input input-bordered"
+             className="w-full border font-semibold border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               aria-label="Name"
             />
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Email</span>
+              <span className="label-text font-semibold">Email</span>
             </label>
             <input
               name="email"
               type="email"
               placeholder="Email"
-              className="input input-bordered"
+              className="w-full border font-semibold border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               aria-label="Email"
             />
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Photo URL</span>
+              <span className="label-text font-semibold">Photo URL</span>
             </label>
             <input
               name="photoURL"
               type="url"
-              placeholder="Photo URL (optional)"
-              className="input input-bordered"
-              aria label="Photo URL"
+              placeholder ="Photo URL (optional)"
+              className="w-full border font-semibold border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-label="Photo URL"
             />
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Password</span>
+              <span className="label-text font-semibold">Password</span>
             </label>
-            <input
-              name="password"
-              type={showPassword ? "text" : "password"} 
-              placeholder="Password"
-              className="input input-bordered"
-              required
-              aria-label="Password"
-            />
-            {passwordError && <p className="text-red-600">{passwordError}</p>}
-            <label className="label cursor-pointer">
-              <span className="label-text">Show Password</span>
+            <div className="relative">
               <input
-                type="checkbox"
-                className="checkbox"
-                checked={showPassword}
-                onChange={() => setShowPassword(!showPassword)}
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                className="w-full border font-semibold border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+                aria-label="Password"
               />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-500"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+              </button>
+            </div>
+            {passwordError && <p className="text-red-600">{passwordError}</p>}
+            <label className="label mt-2">
+              <Link
+                to="/forgotPassword"
+                className="label-text-alt link link-hover font-semibold"
+              >
+                Forgot password?
+              </Link>
             </label>
           </div>
           <div className="form-control mt-6">
-            <button type="submit" className={`btn bg-blue-500 btn-outline text-white ${loading ? 'loading' : ''}`} disabled={loading}>
+            <button type="submit" className={`btn bg-sky-900 rounded-lg text-white w-full ${loading ? 'loading' : ''}`} disabled={loading}>
               {loading ? 'Registering...' : 'Register'}
             </button>
           </div>
         </form>
-        <div className="divider">OR</div>
-        <div className="form-control grid justify-center">
-          <button onClick={handleGoogleLogin} className="btn btn-outline bg-blue-200 md:w-[368px]">
-            <FaGoogle className="mr-2" /> Sign in with Google
+        <div className="divider font-bold">OR</div>
+        <div className="form-control flex justify-center">
+          <button onClick={handleGoogleLogin} className="btn btn-outline bg-blue-200 w-full">
+            <FaGoogle className="mr-2" /> Sign up with Google
           </button>
         </div>
+
         <p className="mt-4 text-center">
           Already have an account? <Link to="/login" className="text-blue-600 font-bold">Login here</Link>
         </p>

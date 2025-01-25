@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
-import Swal from "sweetalert2"; 
+import Swal from "sweetalert2";
 import { FaGoogle } from "react-icons/fa";
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 const Login = () => {
-  const { signInWithEmail, setUser , handleSignInWithGoogle } = useContext(AuthContext);
+  const { signInWithEmail, setUser, handleSignInWithGoogle } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -21,11 +22,11 @@ const Login = () => {
     try {
       const res = await signInWithEmail(email, password);
       const user = res.user;
-      setUser (user);
+      setUser(user);
       Swal.fire({
-        icon: 'success',
-        title: 'Login successful!',
-        text: 'You will be redirected shortly.',
+        icon: "success",
+        title: "Login successful!",
+        text: "You will be redirected shortly.",
         timer: 1500,
         showConfirmButton: false,
       });
@@ -51,8 +52,8 @@ const Login = () => {
       }
 
       Swal.fire({
-        icon: 'error',
-        title: 'Login failed',
+        icon: "error",
+        title: "Login failed",
         text: errorMessage,
       });
     } finally {
@@ -64,11 +65,11 @@ const Login = () => {
     try {
       const res = await handleSignInWithGoogle();
       const user = res.user;
-      setUser (user);
+      setUser(user);
       Swal.fire({
-        icon: 'success',
-        title: 'Login successful with Google!',
-        text: 'You will be redirected shortly.',
+        icon: "success",
+        title: "Login successful with Google!",
+        text: "You will be redirected shortly.",
         timer: 1500,
         showConfirmButton: false,
       });
@@ -78,9 +79,9 @@ const Login = () => {
       }, 1500);
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Google login unsuccessful',
-        text: 'Please try again.',
+        icon: "error",
+        title: "Google login unsuccessful",
+        text: "Please try again.",
       });
     }
   };
@@ -90,34 +91,34 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-blue-100">
-      <div className="card bg-white w-full max-w-lg p-10 shadow-lg rounded-lg">
-        <h2 className="text-2xl font-semibold text-center text-blue-600">
-          Login Your Account
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-blue-100 to-blue-200">
+      <div className="card bg-sky-100 w-full max-w-lg p-10 shadow-lg rounded-lg border border-gray-300">
+        <h2 className="text-2xl font-semibold text-center text-sky-900 mb-6">
+          Login to Your Account
         </h2>
-        <form onSubmit={handleLoginSubmit} className="card-body">
+        <form onSubmit={handleLoginSubmit} className="space-y-4">
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Email</span>
+              <span className="label-text font-semibold">Email</span>
             </label>
             <input
               name="email"
               type="email"
               placeholder="Email"
-              className="input input-bordered"
+              className="w-full border font-semibold border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               aria-label="Email"
             />
           </div>
           <div className="form-control">
             <label className="label">
-              <span className="label-text">Password</span>
+              <span className="label-text font-semibold">Password</span>
             </label>
             <div className="relative">
               <input
                 name="password"
                 type={showPassword ? "text" : "password"}
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="w-full border font-semibold border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter your password"
                 required
                 aria-label="Password"
@@ -130,15 +131,20 @@ const Login = () => {
                 {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
               </button>
             </div>
-            <label className="label">
-              <Link to="/forgotPassword" className="label-text-alt link link-hover">
+            <label className="label mt-2">
+              <Link
+                to="/forgotPassword"
+                className="label-text-alt link link-hover font-semibold"
+              >
                 Forgot password?
               </Link>
             </label>
           </div>
-          <div className="form-control mt-6 ">
+          <div className="form-control mt-6">
             <button
-              className={`btn bg-blue-600 text-white btn-outline lg:w-[368px] ${loading ? "loading" : ""}`}
+              className={`inline-block cursor-pointer rounded-lg bg-sky-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-sky-900 w-full ${
+                loading ? "loading" : ""
+              }`}
               disabled={loading}
             >
               {loading ? "Logging in..." : "Login"}
@@ -149,10 +155,11 @@ const Login = () => {
           <p className="font-semibold">Or login with:</p>
           <div className="flex justify-center items-center">
             <button
-              className="btn btn-outline md:w-[368px] mt-2 flex items-center justify-center"
+              className="btn btn-outline bg-blue-200 w-full"
               onClick={handleGoogleLogin}
+              aria-label="Login with Google"
             >
-              <FaGoogle className="mr-2" />
+              <FaGoogle className="mr-2 " />
               Google
             </button>
           </div>

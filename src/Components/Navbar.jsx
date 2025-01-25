@@ -13,11 +13,11 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar bg-[#4b5bb8] text-white flex justify-between items-center p-4 px-14">
+    <nav className="navbar bg-[#1d3557] text-white flex justify-between items-center p-4 px-14">
       <div className="navbar-start">
         <Link to="/" className="flex justify-center items-center gap-2">
           <div className="grid gap-0 font-bold md:text-xl">
-            <h2>CrowdCube</h2>
+            <h2>WhereIsIt</h2>
           </div>
         </Link>
       </div>
@@ -35,66 +35,76 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              to="/all-campaigns"
-              className={`font-bold hover:text-white ${activeLink === "/all-campaigns" ? "active" : ""}`}
-              onClick={() => handleLinkClick("/all-campaigns")}
+              to="/lost-and-found-items"
+              className={`font-bold hover:text-white ${activeLink === "/lost-and-found-items" ? "active" : ""}`}
+              onClick={() => handleLinkClick("/lost-and-found-items")}
             >
-              All Campaigns
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/add-new-campaign"
-              className={`font-bold hover:text-white ${activeLink === "/add-new-campaign" ? "active" : ""}`}
-              onClick={() => handleLinkClick("/add-new-campaign")}
-            >
-              Add New Campaign
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/my-campaigns"
-              className={`font-bold hover:text-white ${activeLink === "/my-campaigns" ? "active" : ""}`}
-              onClick={() => handleLinkClick("/my-campaigns")}
-            >
-              My Campaigns
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/my-donations"
-              className={`font-bold hover:text-white ${activeLink === "/my-donations" ? "active" : ""}`}
-              onClick={() => handleLinkClick("/my-donations")}
-            >
-              My Donations
+              Lost & Found Items
             </Link>
           </li>
         </ul>
       </div>
 
       <div className="navbar-end flex items-center gap-3">
-        <Link to="/" className="hidden md:inline">
-          <img
-            className="w-12 h-12 rounded-full"
-            src={user && user.photoURL ? user.photoURL : ProfileIcon}
-            alt="Profile"
-          />
-        </Link>
-
         {user && user.email ? (
-          <button
-            onClick={handleLogOut}
-            className="btn bg-blue-600 border-none text-white hidden md:inline"
-          >
-            Log Out
-          </button>
+          <div className="dropdown dropdown-end">
+            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
+                <img src={user.photoURL || ProfileIcon} alt="Profile Pic" />
+              </div>
+            </label>
+            <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+              <li>
+                <Link
+                  to="/add-lost-item"
+                  onClick={() => handleLinkClick("/add-lost-item")}
+                  className="justify-between"
+                >
+                  Add Lost Item
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/add-found-item"
+                  onClick={() => handleLinkClick("/add-found-item")}
+                  className="justify-between"
+                >
+                  Add Found Item
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/my-lost-items"
+                  onClick={() => handleLinkClick("/my-lost-items")}
+                  className="justify-between"
+                >
+                  My Lost Items
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/my-found-items"
+                  onClick={() => handleLinkClick("/my-found-items")}
+                  className="justify-between"
+                >
+                  My Found Items
+                </Link>
+              </li>
+              <li>
+                <button
+                  onClick={handleLogOut}
+                  className="inline-block cursor-pointer rounded-lg bg-sky-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-sky-900"
+                >
+                  Log Out
+                </button>
+              </li>
+            </ul>
+          </div>
         ) : (
           <Link to="/login">
-            <div className="hidden md:inline">
-              <button className="btn bg-blue-600 border-none text-white">
-                Login
-              </button>
-            </div>
+            <button className="inline-block cursor-pointer rounded-lg bg-sky-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-sky-900">
+              Login
+            </button>
           </Link>
         )}
 
@@ -118,7 +128,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-xs bg-blue-500 dropdown-content w-48 rounded-box z-[1] mt-3 p-2 shadow right-[-55px]"
+            className="menu menu-xs bg-gray-500 dropdown-content w-48 rounded-box z-[1] mt-3 p-2 shadow right-[-55px]"
           >
             <li>
               <Link to="/" onClick={() => handleLinkClick("/") }>
@@ -127,48 +137,24 @@ const Navbar = () => {
             </li>
             <li>
               <Link
-                to="/all-campaigns"
-                onClick={() => handleLinkClick("/all-campaigns")}
+                to="/lost-and-found-items"
+                onClick={() => handleLinkClick("/lost-and-found-items")}
               >
-                All Campaigns
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/add-new-campaign"
-                onClick={() => handleLinkClick("/add-new-campaign")}
-              >
-                Add New Campaign
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/my-campaigns"
-                onClick={() => handleLinkClick("/my-campaigns")}
-              >
-                My Campaigns
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/my-donations"
-                onClick={() => handleLinkClick("/my-donations")}
-              >
-                My Donations
-              </Link>
+                Lost & Found Items
+              </ Link>
             </li>
             <li>
               {user && user.email ? (
                 <button
                   onClick={handleLogOut}
-                  className="btn bg-blue-600 border-none text-white"
+                  className="inline-block cursor-pointer rounded-lg bg-sky-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-sky-900"
                 >
                   Log Out
                 </button>
               ) : (
                 <Link
                   to="/login"
-                  className="btn bg-blue-600 border-none text-white flex items-center justify-center"
+                  className="inline-block cursor-pointer rounded-lg bg-sky-800 px-4 py-3 text-center text-sm font-semibold text-white transition duration-200 ease-in-out hover:bg-sky-900"
                 >
                   Log In
                 </Link>
