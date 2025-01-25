@@ -12,9 +12,10 @@ import {
 } from 'firebase/auth';
 import app from '../Firebase/firebase.config';
 
+const auth = getAuth(app);
 
 export const AuthContext = createContext({ user: null });
-const auth = getAuth(app);
+
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {

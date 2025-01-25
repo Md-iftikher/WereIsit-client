@@ -10,4 +10,5 @@ createRoot(document.getElementById("root")).render(
       <AppRouter />
     </AuthProvider>
   </StrictMode>
+  
 );
