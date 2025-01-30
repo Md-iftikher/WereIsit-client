@@ -7,6 +7,8 @@ import PrivateRoutes from "./PrivateRoutes ";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import HomePage from "../Pages/HomePage";
+import AddLostItem from "../Pages/AddLostItem";
+import AllItems from "../Pages/AllItems";
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -18,6 +20,16 @@ const AppRouter = () => {
        
         { path: "/login", element: <Login /> },
         { path: "/register", element: <Register /> },
+        { path: "/lost-and-found-items", element: <AllItems /> },
+        {
+          path: '/add-lost-item',
+          element: (
+            <PrivateRoutes>
+              <AddLostItem/>
+            </PrivateRoutes>
+          ),
+        },
+
       ],
     },
 
