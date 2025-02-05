@@ -9,6 +9,7 @@ import Register from "../Pages/Register";
 import HomePage from "../Pages/HomePage";
 import AddLostItem from "../Pages/AddLostItem";
 import AllItems from "../Pages/AllItems";
+import ItemsDetails from "../Pages/ItemsDetails";
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -26,6 +27,14 @@ const AppRouter = () => {
           element: (
             <PrivateRoutes>
               <AddLostItem/>
+            </PrivateRoutes>
+          ),
+        },
+        {
+          path: '/itemDetails/:id',
+          element: (
+            <PrivateRoutes>
+              <ItemsDetails></ItemsDetails>
             </PrivateRoutes>
           ),
         },

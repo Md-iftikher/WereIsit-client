@@ -94,34 +94,26 @@ const Navbar = () => {
                   className="block py-2 px-4 hover:bg-gray-700"
                   onClick={() => handleLinkClick("/add-lost-item")}
                 >
-                  Add Lost Item
+                  Add Lost & Found Item
                 </Link>
               </li>
+            
               <li>
                 <Link
-                  to="/add-found-item"
-                  className="block py-2 px-4 hover:bg-gray-700"
-                  onClick={() => handleLinkClick("/add-found-item")}
-                >
-                  Add Found Item
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/my-lost-items"
+                  to="/Recovered-Items"
                   className="block py-2 px-4 hover:bg-gray-700"
                   onClick={() => handleLinkClick("/my-lost-items")}
                 >
-                  My Lost Items
+                  Recovered Items
                 </Link>
               </li>
               <li>
                 <Link
-                  to="/my-found-items"
+                  to="/my-items"
                   className="block py-2 px-4 hover:bg-gray-700"
                   onClick={() => handleLinkClick("/my-found-items")}
                 >
-                  My Found Items
+                  My Items
                 </Link>
               </li>
               <li>
