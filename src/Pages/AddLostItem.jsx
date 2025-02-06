@@ -36,13 +36,13 @@ const AddLostItem = () => {
       date: date1,
       name: contactInfo.name,
       email: contactInfo.email,
+      status: "notRecovered" 
     };
 
-    // Log the itemData for debugging
-    console.log(itemData);
+   
+    // console.log(itemData);
 
     try {
-      // Send data to the server using Axios
       const response = await axios.post(`${import.meta.env.VITE_API_LINK}/Additems`, itemData, {
         headers: {
           "Content-Type": "application/json", 
