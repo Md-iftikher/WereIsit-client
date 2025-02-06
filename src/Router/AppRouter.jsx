@@ -10,6 +10,7 @@ import HomePage from "../Pages/HomePage";
 import AddLostItem from "../Pages/AddLostItem";
 import AllItems from "../Pages/AllItems";
 import ItemsDetails from "../Pages/ItemsDetails";
+import MyItems from "../Pages/MyItems";
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -35,6 +36,14 @@ const AppRouter = () => {
           element: (
             <PrivateRoutes>
               <ItemsDetails></ItemsDetails>
+            </PrivateRoutes>
+          ),
+        },
+        {
+          path: '/my-items',
+          element: (
+            <PrivateRoutes>
+              <MyItems></MyItems>
             </PrivateRoutes>
           ),
         },
