@@ -3,12 +3,15 @@ import { AuthContext } from "../Provider/AuthProvider";
 import axios from "axios";
 import Swal from "sweetalert2";
 import LoadingSpinner from "../Components/LoadingSpinner";
+import Modal from "./Modal";
 
 const MyItems = () => {
   const { user } = useContext(AuthContext);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     const fetchMyItems = async () => {
@@ -28,6 +31,16 @@ const MyItems = () => {
     fetchMyItems();
   }, [user]);
 
+  const openUpdateModal = (item) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const closeUpdateModal = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
+  };
+
   const handleDelete = async (itemId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -44,7 +57,7 @@ const MyItems = () => {
             `${import.meta.env.VITE_API_LINK}/deleteitem/${itemId}`
           );
           if (response.data.deletedCount > 0) {
-            setItems(items.filter((item) => item._id !== itemId)); // Update state after successful deletion
+            setItems(items.filter((item) => item._id !== itemId));
             Swal.fire("Deleted!", "Your item has been deleted.", "success");
           }
         } catch (error) {
@@ -55,6 +68,36 @@ const MyItems = () => {
     });
   };
 
+  const handleUpdateSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Selected Item:", selectedItem); // Debugging log
+    try {
+        const response = await axios.put(
+            `${import.meta.env.VITE_API_LINK}/replaceitem/${selectedItem._id}`,
+            selectedItem
+        );
+
+        console.log("Update Response:", response.data); // Debugging log
+
+        // Check if the response contains modifiedCount
+ 
+        if (response.data.result.modifiedCount > 0) {
+            Swal.fire("Updated!", "Your item has been updated.", "success");
+            closeUpdateModal();
+            
+            // Update the items state
+            const updatedItems = items.map((item) =>
+                item._id === selectedItem._id ? { ...item, ...selectedItem } : item
+            );
+            setItems(updatedItems);
+        } else {
+            Swal.fire("No changes made!", "Your item was not updated.", "info");
+        }
+    } catch (error) {
+        console.error("Error updating item:", error);
+        Swal.fire("Error!", "Failed to update the item.", "error");
+    }
+};
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -73,7 +116,7 @@ const MyItems = () => {
 
   return (
     <div className="container mx-auto p-4 my-10">
-      <div className="flex flex-col justify-center items-center gap-1.5 my-2.5" >
+      <div className="flex flex-col justify-center items-center gap-1.5 my-2.5">
         <h2 className="text-4xl font-bold text-blue-900 text-center">
           My Items
         </h2>
@@ -94,7 +137,6 @@ const MyItems = () => {
               <th className="px-6 py-4 font-semibold uppercase tracking-wider border border-gray-200">
                 Location
               </th>
-
               <th className="px-6 py-4 font-semibold uppercase tracking-wider border border-gray-200">
                 Category
               </th>
@@ -117,7 +159,6 @@ const MyItems = () => {
                 <td className="px-6 py-4 whitespace-nowrap border border-gray-200">
                   {new Date(item.date).toLocaleDateString()}
                 </td>
-
                 <td className="px-6 py-4 whitespace-nowrap border border-gray-200">
                   {item.location}
                 </td>
@@ -132,10 +173,10 @@ const MyItems = () => {
                     {item.postType}
                   </span>
                 </td>
-
                 <td className="px-6 py-4 whitespace-nowrap border border-gray-200">
                   <div className="flex space-x-2 justify-center gap-2">
                     <button
+                      onClick={() => openUpdateModal(item)}
                       className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg transition duration-300 shadow-md flex items-center"
                       title="Update"
                     >
@@ -173,6 +214,114 @@ const MyItems = () => {
           </tbody>
         </table>
       </div>
+
+      {/* update items modal  */}
+      <Modal isOpen={isModalOpen} onClose={closeUpdateModal}>
+        <h2 className="text-xl font-bold mb-4">Update Item</h2>
+        <form onSubmit={handleUpdateSubmit}>
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Title
+              </label>
+              <input
+                type="text"
+                value={selectedItem?.title || ""}
+                onChange={(e) =>
+                  setSelectedItem({ ...selectedItem, title: e.target.value })
+                }
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Status
+              </label>
+              <select
+                value={selectedItem?.status || ""}
+                onChange={(e) =>
+                  setSelectedItem({ ...selectedItem, status: e.target.value })
+                }
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                required
+              >
+                <option value="Lost">Lost</option>
+                <option value="Found">Found</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Location
+              </label>
+              <input
+                type="text"
+                value={selectedItem?.location || ""}
+                onChange={(e) =>
+                  setSelectedItem({ ...selectedItem, location: e.target.value })
+                }
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Found Date
+              </label>
+              <input
+                type="date"
+                value={
+                  selectedItem?.date
+                    ? new Date(selectedItem.date).toISOString().split("T")[0]
+                    : ""
+                }
+                onChange={(e) =>
+                  setSelectedItem({ ...selectedItem, date: e.target.value })
+                }
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                User Email
+              </label>
+              <input
+                type="email"
+                value={user?.email || ""}
+                readOnly
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                User Name
+              </label>
+              <input
+                type="text"
+                value={user?.displayName || ""}
+                readOnly
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-gray-100"
+              />
+            </div>
+            <div className="flex justify-end space-x-2">
+              <button
+                type="button"
+                onClick={closeUpdateModal}
+                className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+              >
+                Update
+              </button>
+            </div>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };
