@@ -12,6 +12,8 @@ import AllItems from "../Pages/AllItems";
 import ItemsDetails from "../Pages/ItemsDetails";
 import MyItems from "../Pages/MyItems";
 import AllRecoveredItems from "../Pages/AllRecoveredItems ";
+import HowItWorks from "../Components/HowItWorks";
+import AboutUs from "../Components/AboutUs";
 
 const AppRouter = () => {
   const router = createBrowserRouter([
@@ -22,6 +24,8 @@ const AppRouter = () => {
         { path: "/", element: <HomePage /> },
        
         { path: "/login", element: <Login /> },
+        { path: "/how_it_works", element: <HowItWorks /> },
+        { path: "/About_us", element: <AboutUs /> },
         { path: "/register", element: <Register /> },
         { path: "/lost-and-found-items", element: <AllItems /> },
         {

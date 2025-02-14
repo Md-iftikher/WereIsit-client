@@ -48,6 +48,28 @@ const Navbar = () => {
               Lost & Found Items
             </Link>
           </li>
+          <li>
+            <Link
+              to="/how_it_works"
+              className={`font-bold hover:text-white ${
+                activeLink === "/lost-and-found-items" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/lost-and-found-items")}
+            >
+              How It Works
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/About_us"
+              className={`font-bold hover:text-white ${
+                activeLink === "/lost-and-found-items" ? "active" : ""
+              }`}
+              onClick={() => handleLinkClick("/lost-and-found-items")}
+            >
+              About Us
+            </Link>
+          </li>
         </ul>
       </div>
 
@@ -91,7 +113,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/add-lost-item"
-                  className="block py-2 px-4 hover:bg-gray-700"
+                  className="block py-2 font-semibold px-4 hover:bg-gray-700"
                   onClick={() => handleLinkClick("/add-lost-item")}
                 >
                   Add Lost & Found Item
@@ -101,7 +123,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/Recovered-Items"
-                  className="block py-2 px-4 hover:bg-gray-700"
+                  className="block py-2 font-semibold px-4 hover:bg-gray-700"
                   onClick={() => handleLinkClick("/my-lost-items")}
                 >
                   Recovered Items
@@ -110,7 +132,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to="/my-items"
-                  className="block py-2 px-4 hover:bg-gray-700"
+                  className="block py-2 font-semibold px-4 hover:bg-gray-700"
                   onClick={() => handleLinkClick("/my-found-items")}
                 >
                   My Items
@@ -211,7 +233,7 @@ const Navbar = () => {
             <li>
               <button
                 onClick={handleLogOut}
-                className="block w-full text-left py-2 px-4 hover:bg-gray-600"
+                className="btn block w-full text-left py-2 px-4 hover:bg-gray-600"
               >
                 Log Out
               </button>

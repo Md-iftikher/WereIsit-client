@@ -2,7 +2,7 @@ import "swiper/css/bundle";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
-import Bannerslides from "./BannerSlides"; // Make sure this has Lost & Found data
+import Bannerslides from "./Bannerslides";
 
 const Banner = () => {
   return (
