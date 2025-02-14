@@ -1,16 +1,16 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; 
-import { AuthContext } from "../Provider/AuthProvider"; 
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { FaGoogle } from 'react-icons/fa';
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
 
 const Register = () => {
-  const { createUser, handleSignInWithGoogle, handleUpdateProfile } = useContext(AuthContext); 
+  const { createUser, handleSignInWithGoogle, handleUpdateProfile } = useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); 
+  const [showPassword, setShowPassword] = useState(false);
 
   const validatePassword = (password) => {
     const hasUpperCase = /[A-Z]/.test(password);
@@ -48,7 +48,6 @@ const Register = () => {
       const res = await createUser(email, password);
       const user = res.user;
 
-      // No need to store JWT in local storage
       await handleUpdateProfile({ displayName: name, photoURL });
 
       Swal.fire({
@@ -60,7 +59,7 @@ const Register = () => {
       });
 
       setTimeout(() => {
-        navigate('/'); 
+        navigate('/');
       }, 1500);
     } catch (error) {
       const errorMessage = error.message;
@@ -87,7 +86,7 @@ const Register = () => {
       });
 
       setTimeout(() => {
-        navigate('/'); 
+        navigate('/');
       }, 1500);
     } catch (error) {
       Swal.fire({
@@ -99,12 +98,12 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-blue-100 to-blue-200">
-      <div className="bg-sky-100 w-full max-w-lg p-10 shadow-lg rounded-lg border border-gray-300">
-        <h2 className="text-2xl font-bold text-center text-sky-900 mb-6">
+    <div className="min-h-screen flex justify-center p-4 sm:p-6 md:p-8 lg:p-16 items-center bg-gradient-to-r from-blue-100 to-blue-200">
+      <div className="bg-sky-50 w-full max-w-md p-6 sm:p-8 md:p-10 shadow-lg rounded-lg border border-gray-300">
+        <h2 className="text-xl sm:text-2xl font-bold text-center text-sky-900 mb-4 sm:mb-6">
           Create an Account
         </h2>
-        <form onSubmit={handleRegisterSubmit} className="space-y-4">
+        <form onSubmit={handleRegisterSubmit} className="space-y-3 sm:space-y-4">
           <div className="form-control">
             <label className="label">
               <span className="label-text font-semibold">Name</span>
@@ -138,7 +137,7 @@ const Register = () => {
             <input
               name="photoURL"
               type="url"
-              placeholder ="Photo URL (optional)"
+              placeholder="Photo URL (optional)"
               className="w-full border font-semibold border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               aria-label="Photo URL"
             />
@@ -164,31 +163,33 @@ const Register = () => {
                 {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
               </button>
             </div>
-            {passwordError && <p className="text-red-600">{passwordError}</p>}
-            <label className="label mt-2">
-              <Link
-                to="/forgotPassword"
-                className="label-text-alt link link-hover font-semibold"
-              >
-                Forgot password?
-              </Link>
-            </label>
+            {passwordError && <p className="text-red-600 text-sm">{passwordError}</p>}
           </div>
-          <div className="form-control mt-6">
-            <button type="submit" className={`btn bg-sky-900 rounded-lg text-white w-full ${loading ? 'loading' : ''}`} disabled={loading}>
+          <div className="form-control mt-4 sm:mt-6">
+            <button
+              type="submit"
+              className={`btn bg-sky-900 rounded-lg text-white w-full ${loading ? 'loading' : ''}`}
+              disabled={loading}
+            >
               {loading ? 'Registering...' : 'Register'}
             </button>
           </div>
         </form>
         <div className="divider font-bold">OR</div>
         <div className="form-control flex justify-center">
-          <button onClick={handleGoogleLogin} className="btn btn-outline bg-blue-200 w-full">
+          <button
+            onClick={handleGoogleLogin}
+            className="btn btn-outline bg-blue-200 w-full"
+          >
             <FaGoogle className="mr-2" /> Sign up with Google
           </button>
         </div>
 
-        <p className="mt-4 text-center">
-          Already have an account? <Link to="/login" className="text-blue-600 font-bold">Login here</Link>
+        <p className="mt-4 text-center text-sm sm:text-base">
+          Already have an account?{" "}
+          <Link to="/login" className="text-blue-600 font-bold">
+            Login here
+          </Link>
         </p>
       </div>
     </div>
