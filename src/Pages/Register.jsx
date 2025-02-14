@@ -4,8 +4,9 @@ import { AuthContext } from "../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { FaGoogle } from 'react-icons/fa';
 import { MdVisibility, MdVisibilityOff } from "react-icons/md";
+
 const Register = () => {
-  const { createUser , handleSignInWithGoogle, handleUpdateProfile } = useContext(AuthContext); 
+  const { createUser, handleSignInWithGoogle, handleUpdateProfile } = useContext(AuthContext); 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [passwordError, setPasswordError] = useState("");
@@ -44,9 +45,10 @@ const Register = () => {
     setLoading(true);
 
     try {
-      const res = await createUser (email, password);
+      const res = await createUser(email, password);
       const user = res.user;
 
+      // No need to store JWT in local storage
       await handleUpdateProfile({ displayName: name, photoURL });
 
       Swal.fire({
@@ -111,7 +113,7 @@ const Register = () => {
               name="name"
               type="text"
               placeholder="Your Name"
-             className="w-full border font-semibold border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border font-semibold border-gray-400 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
               aria-label="Name"
             />

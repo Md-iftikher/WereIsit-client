@@ -19,15 +19,16 @@ export const AuthContext = createContext({ user: null });
 const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser ] = useState(null);
+  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState(null);
 
-
   // Create a new user
-  const createUser  = async (email, password) => {
+  const createUser = async (email, password) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const token = await userCredential.user.getIdToken(); // Get JWT
+      localStorage.setItem('jwt', token); // Store JWT
       return userCredential;
     } catch (error) {
       console.error("Error creating user:", error);
@@ -39,6 +40,8 @@ const AuthProvider = ({ children }) => {
   const signInWithEmail = async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const token = await userCredential.user.getIdToken(); // Get JWT
+      localStorage.setItem('jwt', token); // Store JWT
       return userCredential;
     } catch (error) {
       console.error("Error signing in:", error);
@@ -50,6 +53,8 @@ const AuthProvider = ({ children }) => {
   const handleSignInWithGoogle = async () => {
     try {
       const userCredential = await signInWithPopup(auth, googleProvider);
+      const token = await userCredential.user.getIdToken(); // Get JWT
+      localStorage.setItem('jwt', token); // Store JWT
       return userCredential;
     } catch (error) {
       console.error("Error signing in with Google:", error);
@@ -61,6 +66,7 @@ const AuthProvider = ({ children }) => {
   const handleLogOut = async () => {
     try {
       await signOut(auth);
+      localStorage.removeItem('jwt'); // Remove JWT on logout
     } catch (error) {
       console.error("Error signing out:", error);
       throw error;
@@ -70,7 +76,7 @@ const AuthProvider = ({ children }) => {
   // Update user profile
   const handleUpdateProfile = async (updatedData) => {
     try {
-      await updateProfile(auth.currentUser , updatedData);
+      await updateProfile(auth.currentUser, updatedData);
     } catch (error) {
       console.error("Error updating profile:", error);
       throw error;
@@ -90,8 +96,8 @@ const AuthProvider = ({ children }) => {
   // Context value
   const authInfo = {
     user,
-    setUser ,
-    createUser ,
+    setUser,
+    createUser,
     signInWithEmail,
     handleSignInWithGoogle,
     handleLogOut,
@@ -104,8 +110,8 @@ const AuthProvider = ({ children }) => {
 
   // Monitoring authentication state
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser ) => {
-      setUser (currentUser );
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
       setLoading(false);
     });
 

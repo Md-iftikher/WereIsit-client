@@ -59,7 +59,7 @@ const AllRecoveredItems = () => {
 
   if (recoveredItems.length === 0) {
     return (
-      <div className="text-center text-gray-500 mt-8 text-4xl">
+      <div className="text-center text-gray-500 mt-8 text-3xl p-24">
         You haven't recovered any items yet.
       </div>
     );

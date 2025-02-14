@@ -1,15 +1,17 @@
 import React, { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; 
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2"; 
 import axios from "axios"; 
 import { AuthContext } from "../Provider/AuthProvider";
 
 const AddLostItem = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const [postType, setPostType] = useState("Lost");
-  const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnail, setThumbnail] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
@@ -54,7 +56,10 @@ const AddLostItem = () => {
           icon: "success",
           title: "Success!",
           text: "Item added successfully!",
-        });
+        }).then(()=>{
+          navigate("/my-items");
+        })
+        
 
         // Reseting  form fields
         setPostType("Lost");
@@ -64,6 +69,7 @@ const AddLostItem = () => {
         setCategory("");
         setLocation("");
         setDate(new Date());
+        
       } else {
         Swal.fire({
           icon: "error",
