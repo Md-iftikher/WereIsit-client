@@ -11,12 +11,16 @@ const LatestItems = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_LINK}/getAllitems?limit=6&sort=date_desc`
-        );
-        setItems(response.data);
+        const response = await axios.get(`${import.meta.env.VITE_API_LINK}/getAllitems`);
+      
+        const latestItems = response.data
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
+          .slice(0, 6); 
+
+        setItems(latestItems);
       } catch (err) {
         setError("Failed to load items. Please try again.");
+        console.error("Error fetching items:", err);
       } finally {
         setLoading(false);
       }
@@ -24,7 +28,6 @@ const LatestItems = () => {
 
     fetchItems();
   }, []);
-
   if (loading)
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

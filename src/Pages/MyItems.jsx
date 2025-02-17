@@ -70,22 +70,18 @@ const MyItems = () => {
 
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
-    console.log("Selected Item:", selectedItem); // Debugging log
+    
     try {
         const response = await axios.put(
             `${import.meta.env.VITE_API_LINK}/replaceitem/${selectedItem._id}`,
             selectedItem
         );
+        console.log("Update Response:", response.data);
 
-        console.log("Update Response:", response.data); // Debugging log
-
-        // Check if the response contains modifiedCount
- 
         if (response.data.result.modifiedCount > 0) {
             Swal.fire("Updated!", "Your item has been updated.", "success");
             closeUpdateModal();
             
-            // Update the items state
             const updatedItems = items.map((item) =>
                 item._id === selectedItem._id ? { ...item, ...selectedItem } : item
             );
@@ -108,7 +104,7 @@ const MyItems = () => {
 
   if (items.length === 0) {
     return (
-      <div className="text-center text-gray-500 mt-8">
+      <div className="text-center text-gray-500 mt-8 text-3xl p-28">
         You haven't added any items yet.
       </div>
     );

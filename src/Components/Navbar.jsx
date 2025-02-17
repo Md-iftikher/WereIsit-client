@@ -158,6 +158,7 @@ const Navbar = () => {
       </div>
 
       {/* Sidebar */}
+     
       <div
         className={`fixed inset-0 bg-gray-800 bg-opacity-50 transition-opacity ${
           isSidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -194,53 +195,74 @@ const Navbar = () => {
                 Lost & Found Items
               </Link>
             </li>
-            <li>
-              <Link
-                to="/add-lost-item"
-                className="block py-2 px-4 hover:bg-gray-600"
-                onClick={() => handleLinkClick("/add-lost-item")}
-              >
-                Add Lost Item
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/add-found-item"
-                className="block py-2 px-4 hover:bg-gray-600"
-                onClick={() => handleLinkClick("/add-found-item")}
-              >
-                Add Found Item
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/my-lost-items"
-                className="block py-2 px-4 hover:bg-gray-600"
-                onClick={() => handleLinkClick("/my-lost-items")}
-              >
-                My Lost Items
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/my-found-items"
-                className="block py-2 px-4 hover:bg-gray-600"
-                onClick={() => handleLinkClick("/my-found-items")}
-              >
-                My Found Items
-              </Link>
-            </li>
-            <li>
-              <button
-                onClick={handleLogOut}
-                className="btn block w-full text-left py-2 px-4 hover:bg-gray-600"
-              >
-                Log Out
-              </button>
-            </li>
+            
+            {/* Conditional user-specific links */}
+            {user && (
+              <>
+                <li>
+                  <Link
+                    to="/add-lost-item"
+                    className="block py-2 px-4 hover:bg-gray-600"
+                    onClick={() => handleLinkClick("/add-lost-item")}
+                  >
+                    Add Lost Item
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/add-found-item"
+                    className="block py-2 px-4 hover:bg-gray-600"
+                    onClick={() => handleLinkClick("/add-found-item")}
+                  >
+                    Add Found Item
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/my-lost-items"
+                    className="block py-2 px-4 hover:bg-gray-600"
+                    onClick={() => handleLinkClick("/my-lost-items")}
+                  >
+                    My Lost Items
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/my-found-items"
+                    className="block py-2 px-4 hover:bg-gray-600"
+                    onClick={() => handleLinkClick("/my-found-items")}
+                  >
+                    My Found Items
+                  </Link>
+                </li>
+              </>
+            )}
+
+           
+            {user ? (
+              <li>
+                <button
+                  onClick={handleLogOut}
+                  className="btn block bg-sky-800 border-none text-white w-full text-left py-2 px-4 hover:bg-gray-600"
+                >
+                  Log Out
+                </button>
+              </li>
+            ) : (
+              <li>
+                <Link
+                  to="/login"
+                  className="btn bg-sky-800 border-none text-white  block py-2 px-4 hover:bg-gray-600"
+                  onClick={() => handleLinkClick("/login")}
+                >
+                  Login
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
+
     </nav>
   );
 };

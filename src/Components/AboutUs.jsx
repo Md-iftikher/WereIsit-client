@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const AboutUs = () => {
   return (
-    <section className="container mx-auto px-4 py-12 bg-gradient-to-r from-sky-50 to-blue-50 py-12">
+    <section className="container mx-auto px-4  bg-gradient-to-r from-sky-50 to-blue-50 py-12">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         {/* Image */}
         <Fade direction="left" delay={300} duration={1000}>
@@ -11,7 +11,7 @@ const AboutUs = () => {
             <img
               src="https://i.ibb.co.com/TxM3hNc6/freepik-the-style-is-candid-image-photography-with-natural-83388.jpg"
               alt="Lost and Found"
-              className="w-full h-[600px] rounded-lg shadow-lg transform transition-transform duration-300 hover:scale-105 border-2 border-white shadow-xl"
+              className="w-full h-[600px] rounded-lg  transform transition-transform duration-300 hover:scale-105 border-2 border-white shadow-xl"
             />
           </div>
         </Fade>
