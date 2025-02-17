@@ -87,6 +87,7 @@ const ItemsDetails = () => {
 
         // for updating staus
         updateItem(id, { status: "recovered" });
+        
       } else {
         Swal.fire({
           icon: "error",

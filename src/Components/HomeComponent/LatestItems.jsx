@@ -97,7 +97,7 @@ const LatestItems = () => {
                 Date: {new Date(item.date).toLocaleDateString()}
               </p>
 
-              <Link to={`/itemDetails/${item.id}`}>
+              <Link to={`/itemDetails/${item._id}`}>
                 <button className="mt-3 bg-gradient-to-r from-blue-600 to-sky-600 hover:from-blue-700 hover:to-sky-700 text-white px-4 py-2 rounded-md transition-all transform hover:scale-105">
                   View Details
                 </button>
